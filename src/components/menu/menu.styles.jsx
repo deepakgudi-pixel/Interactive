@@ -24,7 +24,7 @@ const StyledContentsContainer = styled.nav`
     left: 50%;
     top: 20vh;
     z-index: 1;
-    // background-color: #000;
+    background-color: #000;
     border-radius: 300px;
 
     .project__image--inner {
