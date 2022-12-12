@@ -18,8 +18,8 @@ const StyledContentsContainer = styled.nav`
   .project__image--outer {
     pointer-events: none;
     overflow: hidden;
-    width: 28vw;
-    height: 42vw;
+    width: 22vw;
+    height: 32vw;
     position: absolute;
     left: 50%;
     top: 20vh;

@@ -9,13 +9,13 @@ export default function Menu({menuOpen}) {
   const innerRef = useRef();
   const outerRef = useRef();
   const backgroundRef = useRef();
-
+  const contentRef = useRef();
 
   return (
     <>
     {menuOpen && (
       <StyledContentsContainer>
-      <div className="content__wrapper">
+      <div className="content__wrapper"  ref={contentRef}>
           {
               contents.map((content)=>(
                 <MenuItems
@@ -26,6 +26,7 @@ export default function Menu({menuOpen}) {
                 outerRef={outerRef}
                 innerRef={innerRef}
                 backgroundRef={backgroundRef}
+                contentRef={contentRef}
                 />
               ))
           }

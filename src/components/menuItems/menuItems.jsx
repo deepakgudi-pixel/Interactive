@@ -9,6 +9,7 @@ export default function MenuItems({
   innerRef,
   outerRef,
   backgroundRef,
+  contentRef,
 }) {
   useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
@@ -83,17 +84,35 @@ export default function MenuItems({
     const leaveTl = gsap.timeline({
       defaults: {
         duration: 1,
-        ease: 'none',
-      }
+        ease: "none",
+      },
     });
 
-    leaveTl.to(outerRef.current,{
-      autoAlpha: 0,
-    })
-    .to(getAllMenuItems,{
-      autoAlpha: 1
-    }, 0);
+    leaveTl
+      .to(outerRef.current, {
+        autoAlpha: 0,
+      })
+      .to(
+        getAllMenuItems,
+        {
+          autoAlpha: 1,
+        },
+        0
+      );
+  }
 
+  function mouseMove({ clientX, clientY }) {
+    const bound = contentRef.current.getBoundingClientRect();
+
+    const xValue = clientX - (bound.left + Math.floor(bound.width / 2));
+    const yValue = clientY - (bound.top + Math.floor(bound.height / 2));
+
+    gsap.to(outerRef.current, {
+      duration: 1.2,
+      ease: "none",
+      x: xValue,
+      y: yValue,
+    });
   }
 
   return (
@@ -104,6 +123,7 @@ export default function MenuItems({
       data-image={src}
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
+      onMouseMove={mouseMove}
     >
       <span className="menu__item--text">{name}</span>
     </StyledMenuItem>
