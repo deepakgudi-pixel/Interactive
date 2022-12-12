@@ -78,6 +78,24 @@ export default function MenuItems({
       );
   }
 
+  function mouseLeave() {
+    const getAllMenuItems = gsap.utils.toArray(".menu__item");
+    const leaveTl = gsap.timeline({
+      defaults: {
+        duration: 1,
+        ease: 'none',
+      }
+    });
+
+    leaveTl.to(outerRef.current,{
+      autoAlpha: 0,
+    })
+    .to(getAllMenuItems,{
+      autoAlpha: 1
+    }, 0);
+
+  }
+
   return (
     <StyledMenuItem
       href=""
@@ -85,6 +103,7 @@ export default function MenuItems({
       data-color={bgcolor}
       data-image={src}
       onMouseEnter={mouseEnter}
+      onMouseLeave={mouseLeave}
     >
       <span className="menu__item--text">{name}</span>
     </StyledMenuItem>
