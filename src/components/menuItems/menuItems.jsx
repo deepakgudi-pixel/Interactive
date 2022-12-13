@@ -1,16 +1,20 @@
-import { useLayoutEffect } from "react";
+import { useLayoutEffect, useRef } from "react";
 import { StyledMenuItem } from "./menuItems.styles";
 import { gsap } from "gsap";
 
 export default function MenuItems({
   name,
-  bgcolor,
+  bgColor,
   src,
   innerRef,
   outerRef,
   backgroundRef,
   contentRef,
 }) {
+
+  const wordRef = useRef();
+  const wordRefClone = useRef();
+
   useLayoutEffect(() => {
     document.body.style.overflow = "hidden";
 
@@ -31,6 +35,7 @@ export default function MenuItems({
     };
   }, []);
 
+  //mouse enter
   function mouseEnter(e) {
     const { image, color } = e.target.dataset;
     const getAllMenuItems = gsap.utils.toArray(".menu__item");
@@ -45,7 +50,7 @@ export default function MenuItems({
           gsap.set(innerRef.current, {
             backgroundImage: `url(${image})`,
           });
-          gsap.to(backgroundRef, {
+          gsap.to(backgroundRef.current, {
             backgroundColor: color,
             duration: 1,
             ease: "expo",
@@ -76,9 +81,29 @@ export default function MenuItems({
           autoAlpha: 0.2,
         },
         0
-      );
+      )
+      .to(wordRef.current.children,{
+        y: "100%",
+        rotationX: -90,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.025,
+      }, 0)
+      .to(wordRefClone.current.children,{
+        startAt:{
+          y: "-100%",
+          rotationX: 90,
+          opacity: 0,
+        },
+        y: "0%",
+        rotationX: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.025,
+      }, 0);
   }
 
+  //mouse leave
   function mouseLeave() {
     const getAllMenuItems = gsap.utils.toArray(".menu__item");
     const leaveTl = gsap.timeline({
@@ -98,7 +123,26 @@ export default function MenuItems({
           autoAlpha: 1,
         },
         0
-      );
+      )
+      .to(wordRef.current.children,{
+        startAt: {
+          y: "100%",
+          rotationX: -90,
+          opacity: 0,
+        },
+        y: "0%",
+        rotationX: 0,
+        opacity: 1,
+        duration: 0.5,
+        stagger: 0.025,
+      }, 0)
+      .to(wordRefClone.current.children,{
+        y: "-100%",
+        rotationX: 90,
+        opacity: 0,
+        duration: 0.5,
+        stagger: 0.025,
+      }, 0);
   }
 
   function mouseMove({ clientX, clientY }) {
@@ -115,17 +159,48 @@ export default function MenuItems({
     });
   }
 
+  
   return (
     <StyledMenuItem
       href=""
       className="menu__item"
-      data-color={bgcolor}
+      data-color={bgColor}
       data-image={src}
       onMouseEnter={mouseEnter}
       onMouseLeave={mouseLeave}
       onMouseMove={mouseMove}
     >
-      <span className="menu__item--text">{name}</span>
+      <span className="menu__item--text">
+
+        <span className="word" ref={wordRef}>
+          {name.split('').map((item, i)=>{
+              return(
+                <span 
+                key={i}
+                className=""
+                style={{display: "inline-block", willChange: "transform"}}>
+                   {item}
+                </span>
+              )
+          })}
+        </span>
+
+
+        <span className="word clone" ref={wordRefClone}>
+          {name.split('').map((item, i)=>{
+              return(
+                <span 
+                key={i}
+                className=""
+                style={{display: "inline-block", willChange: "transform"}}>
+                   {item}
+                </span>
+              )
+          })}
+        </span>
+
+
+      </span>
     </StyledMenuItem>
   );
 }

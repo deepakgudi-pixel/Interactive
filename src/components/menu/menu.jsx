@@ -21,7 +21,7 @@ export default function Menu({menuOpen}) {
                 <MenuItems
                 key={content.id}
                 name={content.name}
-                bgcolor={content.color}
+                bgColor={content.color}
                 src={content.image}
                 outerRef={outerRef}
                 innerRef={innerRef}
