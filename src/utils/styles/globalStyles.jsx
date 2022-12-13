@@ -1,6 +1,7 @@
 import { createGlobalStyle} from "styled-components";
 import reset from "styled-reset";
 import ItalianaRegular from "../../assets/fonts/Italiana-Regular.ttf";
+import MontserratLight from "../../assets/fonts/Montserrat-Light.ttf";
 
 export const GlobalStyle = createGlobalStyle`
 ${reset}
@@ -11,6 +12,13 @@ ${reset}
     font-weight: 400;
     src: url(${ItalianaRegular});
   }
+
+  @font-face {
+    font-family: Montserrat;
+    font-style: normal;
+    font-weight: 400;
+    src: url(${MontserratLight});
+  }  
 
 body {
     line-height: 1;

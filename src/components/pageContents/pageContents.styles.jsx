@@ -19,7 +19,7 @@ z-index: -1;
     }
 
     .content__text--copy{
-        // font-family: Italiana;
+        font-family: Montserrat;
         font-size: clamp(1rem, 2vw, 1.25rem);
         line-height: 1.3;
         font-weight: 300;
